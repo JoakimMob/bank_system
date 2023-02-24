@@ -21,7 +21,7 @@ jobs:
           reporter: github-pr-review
           level: warning
       - name: Build JAR
-        run: mvn package
+        run: mvn -B package --file bank-system/pom.xml
       - name: Upload JAR
         uses: actions/upload-artifact@v3
         with:

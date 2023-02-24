@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   build_and_package:
@@ -15,6 +15,11 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - uses: dbelyaev/action-checkstyle@v0.5.1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          level: warning
       - uses: actions/upload-artifact@v3
         with:
           name: release

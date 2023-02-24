@@ -2,9 +2,9 @@ name: CI/CD
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   build_and_package:
@@ -15,7 +15,16 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - uses: dbelyaev/action-checkstyle@v0.5.1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          level: warning
+      - run: ls -la
+      - name: Build with Maven
+        run: mvn -B package --file pom.xml
+      - run: mkdir staging && cp target/*.jar staging
       - uses: actions/upload-artifact@v3
         with:
-          name: release
-          path: bank-system/target/bank-system-1.0.jar
+          name: Package
+          path: staging

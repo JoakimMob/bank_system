@@ -15,7 +15,6 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-      - name: Checkstyle
       - uses: dbelyaev/action-checkstyle@v0.5.1
         with:
           github_token: ${{ secrets.github_token }}

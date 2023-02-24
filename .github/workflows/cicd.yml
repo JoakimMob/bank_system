@@ -15,16 +15,16 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+      - name: Checkstyle
       - uses: dbelyaev/action-checkstyle@v0.5.1
         with:
           github_token: ${{ secrets.github_token }}
           reporter: github-pr-review
           level: warning
-      - run: ls -la
-      - name: Build with Maven
-        run: mvn -B package --file bank-system/pom.xml
-      - run: mkdir staging && cp target/*.jar staging
-      - uses: actions/upload-artifact@v3
+      - name: Build JAR
+        run: mvn package
+      - name: Upload JAR
+        uses: actions/upload-artifact@v3
         with:
-          name: Package
-          path: staging
+          name: Bank-System
+          path: bank-system/target/bank-system-1.0-SNAPSHOT.jar

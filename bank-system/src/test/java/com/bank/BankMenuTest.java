@@ -19,7 +19,6 @@ public class BankMenuTest {
     void initializeBankAccountAndSetBalance(){
         bankAccount = new BankAccount("Jane Doe", "1");
         bankAccount.setBalance(1000.00);
-        bankAccount.setPrevTrans(300.00);
     }
 
     @Test
@@ -33,6 +32,19 @@ public class BankMenuTest {
 
         bankMenu.menu();
         verify(bankService, atLeast(1)).withdraw(bankAccount,200.00);
+    }
+
+    @Test
+    void depositMenuTest(){
+        bankService = mock(BankService.class);
+        bankMenu = new BankMenu(bankService, bankAccount);
+
+        String input = "b\n800\ne";
+        InputStream inputStream = new ByteArrayInputStream(input.getBytes());
+        System.setIn(inputStream);
+
+        bankMenu.menu();
+        verify(bankService, atLeast(1)).deposit(bankAccount,800);
     }
 
 }

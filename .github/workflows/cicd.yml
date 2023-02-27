@@ -1,0 +1,29 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build_and_package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - uses: dbelyaev/action-checkstyle@v0.5.1
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          level: warning
+      - name: Build JAR
+        run: mvn -B package --file bank-system/pom.xml
+      - name: Upload JAR
+        uses: actions/upload-artifact@v3
+        with:
+          name: Bank-System
+          path: bank-system/target/bank-system-1.0-SNAPSHOT.jar

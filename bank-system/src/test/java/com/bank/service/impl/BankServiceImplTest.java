@@ -5,8 +5,10 @@ import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 
 public class BankServiceImplTest extends TestCase {
+
      BankServiceImpl bankService = new BankServiceImpl();
     BankAccount bankAccount = new BankAccount("Elias", "1");
+
 
     @Test
     public void testIfWithdrawWorks() {
